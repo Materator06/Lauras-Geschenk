@@ -5,15 +5,19 @@ let focused = null;
 
 /* ===== Kreis / Oval (nach DOM geladen) ===== */
 document.addEventListener("DOMContentLoaded", () => {
-  const cx = window.innerWidth / 2;
-  const cy = window.innerHeight / 2;
+  const vw = Math.min(window.innerWidth, document.documentElement.clientWidth);
+  const vh = Math.min(window.innerHeight, document.documentElement.clientHeight);
 
-  let rx = 600;
-  let ry = 300;
+  const cx = vw / 2;
+  const cy = vh / 2;
 
-  if (window.innerWidth <= 768) {
-    rx = window.innerWidth * 0.38;
-    ry = window.innerHeight * 0.22;
+  let rx = vw * 0.38;
+  let ry = vh * 0.28;
+
+  // Desktop größer
+  if (vw > 768) {
+    rx = 600;
+    ry = 300;
   }
 
   frames.forEach((f, i) => {
@@ -22,8 +26,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const x = cx + Math.cos(a) * rx;
     const y = cy + Math.sin(a) * ry;
 
-    f.style.left = x - f.offsetWidth / 2 + "px";
-    f.style.top  = y - f.offsetHeight / 2 + "px";
+    f.style.left = `${x - f.offsetWidth / 2}px`;
+    f.style.top  = `${y - f.offsetHeight / 2}px`;
   });
 });
 
@@ -153,6 +157,7 @@ unlockBtn.addEventListener("click", () => {
     error.style.display = "block";
   }
 });
+
 
 
 
