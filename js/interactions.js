@@ -8,8 +8,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const cx = window.innerWidth / 2;
   const cy = window.innerHeight / 2;
 
-  const rx = 600; // Breite (oval)
-  const ry = 300; // Höhe
+  let rx = 600;
+  let ry = 300;
+
+  if (window.innerWidth <= 768) {
+    rx = window.innerWidth * 0.38;
+    ry = window.innerHeight * 0.22;
+  }
 
   frames.forEach((f, i) => {
     const a = (i / frames.length) * Math.PI * 2;
@@ -17,16 +22,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const x = cx + Math.cos(a) * rx;
     const y = cy + Math.sin(a) * ry;
 
-    // Frame zentrieren (halbe Breite/Höhe)
     f.style.left = x - f.offsetWidth / 2 + "px";
     f.style.top  = y - f.offsetHeight / 2 + "px";
   });
-  if (window.innerWidth <= 768) {
-  rx = 240;
-  ry = 120;
-}
-
 });
+
 
 
 
@@ -153,6 +153,7 @@ unlockBtn.addEventListener("click", () => {
     error.style.display = "block";
   }
 });
+
 
 
 
