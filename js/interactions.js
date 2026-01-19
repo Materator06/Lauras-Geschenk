@@ -145,18 +145,23 @@ unlockBtn.addEventListener("click", () => {
   const entered = pwInput.value.trim().toLowerCase();
 
   if (entered === correctPassword.toLowerCase()) {
-    document.body.classList.remove("locked");
-    lockscreen.style.display = "none";
-    error.style.display = "none";
+  document.body.classList.remove("locked");
+  lockscreen.style.display = "none";
+  error.style.display = "none";
 
-    // Intro JETZT starten
-    if (typeof startIntro === "function") {
-      startIntro();
-    }
-  } else {
-    error.style.display = "block";
+  // Intro starten
+  if (typeof startIntro === "function") {
+    startIntro();
   }
-});
+
+  // 📱 Mobile nach Intro aktivieren
+  if (window.innerWidth <= 768 && typeof window.showMobileAfterIntro === "function") {
+    setTimeout(() => {
+      window.showMobileAfterIntro();
+    }, 100);
+  }
+}
+);
 
 if (window.innerWidth <= 768) {
   const tabImages = document.getElementById("tabImages");
@@ -181,6 +186,44 @@ if (window.innerWidth <= 768) {
     images.style.display = "none";
   };
 }
+/* =========================
+   MOBILE INTRO + TABS FIX
+========================= */
+document.addEventListener("DOMContentLoaded", () => {
+  if (window.innerWidth > 768) return;
+
+  const tabImages = document.getElementById("tabImages");
+  const tabCard = document.getElementById("tabCard");
+  const images = document.getElementById("mobileImages");
+  const cardWrap = document.getElementById("mobileCard");
+
+  if (!tabImages || !tabCard || !images || !cardWrap) {
+    console.error("Mobile Tabs nicht gefunden");
+    return;
+  }
+
+  // Startzustand NACH Intro
+  function showImages() {
+    tabImages.classList.add("active");
+    tabCard.classList.remove("active");
+    images.style.display = "flex";
+    cardWrap.style.display = "none";
+  }
+
+  function showCard() {
+    tabCard.classList.add("active");
+    tabImages.classList.remove("active");
+    cardWrap.style.display = "flex";
+    images.style.display = "none";
+  }
+
+  tabImages.addEventListener("click", showImages);
+  tabCard.addEventListener("click", showCard);
+
+  // WICHTIG: nach Unlock automatisch Bilder anzeigen
+  window.showMobileAfterIntro = showImages;
+});
+
 
 
 

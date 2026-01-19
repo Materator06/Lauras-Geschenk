@@ -97,3 +97,12 @@
   transform: rotateY(-180deg);
 }
 
+@media (max-width: 768px) {
+  #mobileImages {
+    display: flex;
+  }
+
+  #mobileCard {
+    display: none;
+  }
+}
