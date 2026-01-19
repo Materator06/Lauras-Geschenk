@@ -1,0 +1,255 @@
+body.locked {
+  overflow: hidden;
+}
+
+body.locked * {
+  pointer-events: none;
+}
+
+body {
+  margin: 0;
+  overflow: hidden;
+  font-family: monospace;
+  background: black;
+}
+
+.frame, #card {
+  transition: transform 0.8s cubic-bezier(.2,.85,.25,1);
+}
+
+
+.focused {
+  position: fixed !important;
+  left: 50% !important;
+  top: 50% !important;
+
+  transform: translate(-50%, -50%) scale(2.4) !important;
+
+  z-index: 5000 !important;
+  isolation: isolate;
+
+  transition:
+    left 0.8s cubic-bezier(.2,.85,.25,1),
+    top 0.8s cubic-bezier(.2,.85,.25,1),
+    transform 0.8s cubic-bezier(.2,.85,.25,1);
+}
+
+
+/* Frames beim Fokus wirklich in die Mitte zwingen */
+.frame.focused {
+  position: fixed !important;
+  left: 50% !important;
+  top: 50% !important;
+
+  transform: translate(-50%, -50%) scale(2.4) !important;
+
+  transition:
+    left 0.8s cubic-bezier(.2,.85,.25,1),
+    top 0.8s cubic-bezier(.2,.85,.25,1),
+    transform 0.8s cubic-bezier(.2,.85,.25,1);
+}
+
+.dimmed {
+  filter: blur(3px) brightness(0.3);
+  pointer-events: none;
+}
+
+#upload-ui {
+  
+  pointer-events: auto;
+  z-index: 2000;
+
+
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+
+  display: flex;
+  gap: 10px;
+  align-items: center;
+
+  padding: 12px 14px;
+  border-radius: 20px;
+
+  background: rgba(255, 214, 231, 0.18);
+  backdrop-filter: blur(10px);
+
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.35),
+    inset 0 0 0 1px rgba(255,255,255,0.3);
+
+  z-index: 2000;
+}
+
+
+#upload-ui select,
+#upload-ui input {
+  background: rgba(255, 158, 207, 0.6);
+  color: #333;
+
+  border: none;
+  padding: 6px 10px;
+  border-radius: 10px;
+
+  font-family: monospace;
+  font-weight: bold;
+  cursor: pointer;
+
+  box-shadow: 0 6px 16px rgba(255, 158, 207, 0.6);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+
+#upload-ui button {
+  background: linear-gradient(135deg, #ff9ecf, #ffd6e7);
+  color: #4a0028;
+
+  border: none;
+  padding: 8px 14px;
+  border-radius: 14px;
+
+  font-family: monospace;
+  font-weight: bold;
+  cursor: pointer;
+
+  box-shadow: 0 6px 16px rgba(255, 158, 207, 0.6);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#upload-ui button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 24px rgba(255, 158, 207, 0.8);
+}
+
+
+#upload-ui button:hover {
+  background: #ffd6e7;
+}
+/* ===== Custom File Button ===== */
+.file-btn {
+  background: linear-gradient(135deg, #ffd6e7, #ff9ecf);
+  color: #4a0028;
+
+  padding: 8px 14px;
+  border-radius: 14px;
+
+  font-family: monospace;
+  font-weight: bold;
+  cursor: pointer;
+  user-select: none;
+
+  box-shadow: 0 6px 16px rgba(255, 158, 207, 0.6);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.file-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 24px rgba(255, 158, 207, 0.8);
+}
+@media (max-width: 768px) {
+  #upload-ui {
+    right: 12px;
+    bottom: 12px;
+    padding: 10px;
+    gap: 6px;
+  }
+
+  #upload-ui select,
+  #upload-ui input,
+  #upload-ui button {
+    padding: 10px 12px;
+    font-size: 16px;
+  }
+
+  .file-btn {
+    font-size: 16px;
+  }
+
+  .frame {
+    width: 180px;
+    height: 140px;
+  }
+
+  .frame.focused {
+    transform: translate(-50%, -50%) scale(2) !important;
+  }
+}
+html, body {
+  touch-action: manipulation;
+}
+
+#upload-ui button,
+.file-btn {
+  touch-action: manipulation;
+}
+body.locked {
+  overflow: hidden;
+}
+
+#lockscreen {
+  position: fixed;
+  inset: 0;
+  background: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+}
+
+.lockbox {
+  background: rgba(255,255,255,0.05);
+  padding: 30px;
+  border-radius: 20px;
+  text-align: center;
+  color: white;
+  font-family: monospace;
+  box-shadow: 0 0 40px rgba(255,158,207,0.4);
+}
+
+.lockbox input {
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 8px;
+  border: none;
+  width: 200px;
+  font-size: 16px;
+}
+
+.lockbox button {
+  margin-top: 12px;
+  padding: 10px 16px;
+  border-radius: 8px;
+  border: none;
+  background: #ff9ecf;
+  font-family: monospace;
+  cursor: pointer;
+}
+
+#pw-error {
+  color: #ff6b6b;
+  display: none;
+  margin-top: 10px;
+}
+
+/* ===== Lockscreen darf immer klickbar sein ===== */
+#lockscreen,
+#lockscreen * {
+  pointer-events: auto !important;
+}
+#pw-error {
+  color: #ff6b6b;
+  display: none;
+  margin-top: 10px;
+}
+
+
+
+
+
+
+
+
+
+
+
+

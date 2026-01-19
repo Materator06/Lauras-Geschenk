@@ -1,0 +1,21 @@
+#intro {
+  position: fixed;
+  inset: 0;
+  background: black;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+ 
+  pointer-events: none;
+  opacity: 1;
+
+
+  transition: opacity 2s ease;
+}
+
+#intro-text {
+  font-size: 26px;
+  white-space: pre-wrap;
+}
+
