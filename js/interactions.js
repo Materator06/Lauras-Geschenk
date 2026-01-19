@@ -158,6 +158,31 @@ unlockBtn.addEventListener("click", () => {
   }
 });
 
+if (window.innerWidth <= 768) {
+  const tabImages = document.getElementById("tabImages");
+  const tabCard = document.getElementById("tabCard");
+  const images = document.getElementById("mobileImages");
+  const card = document.getElementById("mobileCard");
+
+  images.style.display = "block";
+  card.style.display = "none";
+
+  tabImages.onclick = () => {
+    tabImages.classList.add("active");
+    tabCard.classList.remove("active");
+    images.style.display = "block";
+    card.style.display = "none";
+  };
+
+  tabCard.onclick = () => {
+    tabCard.classList.add("active");
+    tabImages.classList.remove("active");
+    card.style.display = "flex";
+    images.style.display = "none";
+  };
+}
+
+
 
 
 
