@@ -342,8 +342,41 @@ html, body {
     display: none;
   }
 }
+/* ===== MOBILE SAFE VIEW ===== */
+@media (max-width: 768px) {
 
+  #scene {
+    display: none;
+  }
 
+  #mobile-app {
+    display: block;
+  }
+
+  #mobile-images {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 90px 16px 16px;
+  }
+
+  #mobile-images img {
+    width: 100%;
+    border-radius: 18px;
+  }
+
+  #mobile-card {
+    padding-top: 90px;
+    display: flex;
+    justify-content: center;
+  }
+}
+/* Upload UI darf niemals deaktiviert werden */
+#upload-ui {
+  pointer-events: auto !important;
+  filter: none !important;
+  opacity: 1 !important;
+}
 
 
 
