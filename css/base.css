@@ -255,6 +255,22 @@ body.locked {
     object-fit: cover;
   }
 }
+@media (max-width: 768px) {
+  .frame.focused {
+    transform: translate(-50%, -50%) scale(1.6) !important;
+  }
+
+  #card.focused {
+    transform: translate(-50%, -50%) scale(1.4) !important;
+  }
+}
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+
+
 
 
 
