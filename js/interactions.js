@@ -1,42 +1,43 @@
 console.log("interactions.js loaded");
+
+/* =========================
+   GLOBALS
+========================= */
 const frames = document.querySelectorAll(".frame");
 const card = document.getElementById("card");
+const uploadUI = document.getElementById("upload-ui");
+
 let focused = null;
 
-/* ===== Kreis / Oval (nach DOM geladen) ===== */
+/* =========================
+   FRAME POSITIONING (DESKTOP)
+========================= */
 document.addEventListener("DOMContentLoaded", () => {
-  const vw = Math.min(window.innerWidth, document.documentElement.clientWidth);
-  const vh = Math.min(window.innerHeight, document.documentElement.clientHeight);
+  const vw = window.innerWidth;
+  const vh = window.innerHeight;
+
+  if (vw <= 768) return; // Mobile: keine Kreis-Positionierung
 
   const cx = vw / 2;
   const cy = vh / 2;
 
-  let rx = vw * 0.38;
-  let ry = vh * 0.28;
+  const rx = 600;
+  const ry = 300;
 
-  // Desktop größer
-  if (vw > 768) {
-    rx = 600;
-    ry = 300;
-  }
+  frames.forEach((frame, i) => {
+    const angle = (i / frames.length) * Math.PI * 2;
+    const x = cx + Math.cos(angle) * rx;
+    const y = cy + Math.sin(angle) * ry;
 
-  frames.forEach((f, i) => {
-    const a = (i / frames.length) * Math.PI * 2;
-
-    const x = cx + Math.cos(a) * rx;
-    const y = cy + Math.sin(a) * ry;
-
-    f.style.left = `${x - f.offsetWidth / 2}px`;
-    f.style.top  = `${y - f.offsetHeight / 2}px`;
+    frame.style.left = `${x - frame.offsetWidth / 2}px`;
+    frame.style.top = `${y - frame.offsetHeight / 2}px`;
   });
 });
 
-
-
-
-
-/* ===== Fokus ===== */
-function focus(el) {
+/* =========================
+   FOCUS SYSTEM (FIXED)
+========================= */
+function setFocus(el) {
   if (focused) return;
 
   focused = el;
@@ -45,6 +46,11 @@ function focus(el) {
   document.querySelectorAll(".frame, #card").forEach(e => {
     if (e !== el) e.classList.add("dimmed");
   });
+
+  // Upload UI niemals dimmen
+  if (uploadUI) {
+    uploadUI.classList.remove("dimmed");
+  }
 }
 
 function clearFocus() {
@@ -53,6 +59,7 @@ function clearFocus() {
   document.querySelectorAll(".focused").forEach(e =>
     e.classList.remove("focused")
   );
+
   document.querySelectorAll(".dimmed").forEach(e =>
     e.classList.remove("dimmed")
   );
@@ -60,72 +67,77 @@ function clearFocus() {
   card.classList.remove("open");
 }
 
-/* ===== Events ===== */
-frames.forEach(f => {
-  f.addEventListener("click", e => {
+/* =========================
+   CLICK EVENTS
+========================= */
+frames.forEach(frame => {
+  frame.addEventListener("click", e => {
     e.stopPropagation();
-    focus(f);
+    setFocus(frame);
   });
 });
 
 card.addEventListener("click", e => {
   e.stopPropagation();
-  focus(card);
+  setFocus(card);
 });
 
 card.addEventListener("dblclick", e => {
   e.stopPropagation();
-  if (!focused) return;
   card.classList.toggle("open");
 });
 
 document.body.addEventListener("click", clearFocus);
 
 /* =========================
-   IMAGE UPLOAD + REPLACE
+   IMAGE UPLOAD + STORAGE
 ========================= */
 document.addEventListener("DOMContentLoaded", () => {
   const uploadInput = document.getElementById("image-upload");
   const frameSelect = document.getElementById("frame-select");
   const uploadBtn = document.getElementById("upload-btn");
+  const fileLabel = document.querySelector(".file-btn");
 
   if (!uploadInput || !frameSelect || !uploadBtn) {
-    console.error("Upload-UI nicht gefunden");
+    console.error("Upload UI nicht gefunden");
     return;
   }
 
+  // Label ändern bei Dateiauswahl
   uploadInput.addEventListener("change", () => {
-  const label = document.querySelector(".file-btn");
-  if (uploadInput.files.length > 0) {
-    label.textContent = "✔ Bild gewählt";
-  }
-});
+    if (uploadInput.files.length > 0) {
+      fileLabel.textContent = "✔ Bild gewählt";
+    }
+  });
 
+  // Upload
+  uploadBtn.addEventListener("click", e => {
+    e.stopPropagation();
 
-  uploadBtn.addEventListener("click", () => {
     const file = uploadInput.files[0];
     if (!file) {
       alert("Bitte zuerst ein Bild auswählen ❤️");
       return;
     }
 
-    const frameIndex = Number(frameSelect.value);
+    const index = Number(frameSelect.value);
     const reader = new FileReader();
 
-    reader.onload = e => {
-      const img = frames[frameIndex].querySelector("img");
-      img.src = e.target.result;
+    reader.onload = ev => {
+      const img = frames[index].querySelector("img");
+      img.src = ev.target.result;
 
+      // speichern
       localStorage.setItem(
-        "frame-image-" + frameIndex,
-        e.target.result
+        "frame-image-" + index,
+        ev.target.result
       );
     };
 
     reader.readAsDataURL(file);
   });
 
-  /* gespeicherte Bilder laden */
+  // gespeicherte Bilder laden
   frames.forEach((frame, i) => {
     const saved = localStorage.getItem("frame-image-" + i);
     if (saved) {
@@ -133,8 +145,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
-/* Passwort verschlüsslung */
-const correctPassword = "laura"; // ← dein Passwort
+
+/* =========================
+   PASSWORD LOCK
+========================= */
+const correctPassword = "laura";
 
 const unlockBtn = document.getElementById("unlock");
 const pwInput = document.getElementById("pw");
@@ -149,7 +164,6 @@ unlockBtn.addEventListener("click", () => {
     lockscreen.style.display = "none";
     error.style.display = "none";
 
-    // Intro JETZT starten
     if (typeof startIntro === "function") {
       startIntro();
     }
@@ -158,37 +172,49 @@ unlockBtn.addEventListener("click", () => {
   }
 });
 
+/* =========================
+   MOBILE TABS
+========================= */
 if (window.innerWidth <= 768) {
   const tabImages = document.getElementById("tabImages");
   const tabCard = document.getElementById("tabCard");
   const images = document.getElementById("mobileImages");
-  const card = document.getElementById("mobileCard");
+  const mobileCard = document.getElementById("mobileCard");
 
   images.style.display = "block";
-  card.style.display = "none";
+  mobileCard.style.display = "none";
 
   tabImages.onclick = () => {
     tabImages.classList.add("active");
     tabCard.classList.remove("active");
     images.style.display = "block";
-    card.style.display = "none";
+    mobileCard.style.display = "none";
   };
 
   tabCard.onclick = () => {
     tabCard.classList.add("active");
     tabImages.classList.remove("active");
-    card.style.display = "flex";
+    mobileCard.style.display = "flex";
     images.style.display = "none";
   };
 }
+/* =========================
+   MOBILE FRAME CLONE
+========================= */
+if (window.innerWidth <= 768) {
+  const mobileImages = document.getElementById("mobileImages");
+  const mobileCard = document.getElementById("mobileCard");
 
+  frames.forEach(frame => {
+    const clone = frame.cloneNode(true);
+    clone.classList.remove("focused", "dimmed");
 
+    clone.onclick = () => {
+      clone.classList.toggle("focused");
+    };
 
+    mobileImages.appendChild(clone);
+  });
 
-
-
-
-
-
-
-
+  mobileCard.appendChild(card.cloneNode(true));
+}
