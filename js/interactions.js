@@ -174,3 +174,32 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
+/* =========================
+   MOBILE TAB SWITCH
+========================= */
+if (window.innerWidth <= 768) {
+  const tabImages = document.getElementById("tabImages");
+  const tabCard = document.getElementById("tabCard");
+  const card = document.getElementById("card");
+  const frames = document.querySelectorAll(".frame");
+
+  // Start: Bilder sichtbar
+  card.style.display = "none";
+  frames.forEach(f => f.style.display = "block");
+
+  tabImages.addEventListener("click", () => {
+    tabImages.classList.add("active");
+    tabCard.classList.remove("active");
+
+    card.style.display = "none";
+    frames.forEach(f => f.style.display = "block");
+  });
+
+  tabCard.addEventListener("click", () => {
+    tabCard.classList.add("active");
+    tabImages.classList.remove("active");
+
+    card.style.display = "block";
+    frames.forEach(f => f.style.display = "none");
+  });
+}
