@@ -101,25 +101,34 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
+
 /* =========================
-   PASSWORD LOCK
+   PASSWORD LOCK (FIXED)
 ========================= */
 const correctPassword = "laura";
 
-document.getElementById("unlock").onclick = () => {
-  const entered = document.getElementById("pw").value.trim().toLowerCase();
+document.getElementById("unlock").addEventListener("click", () => {
+  const entered = document.getElementById("pw").value.trim();
 
-  if (entered === correctPassword) {
-    document.body.classList.remove("locked");
-    document.body.style.pointerEvents = "auto";
-    document.body.style.overflow = "auto";
-    document.getElementById("lockscreen").style.display = "none";
-    document.getElementById("pw-error").style.display = "none";
+  if (entered.toLowerCase() !== correctPassword.toLowerCase()) {
+    document.getElementById("pw-error").style.display = "block";
+    return;
+  }
 
-    if (typeof startIntro === "function") startIntro();
+  // 🔓 ENTSPERREN
+  document.body.classList.remove("locked");
+  document.body.style.pointerEvents = "auto";
+  document.body.style.overflow = "hidden";
 
-   
-};
+  document.getElementById("lockscreen").style.display = "none";
+  document.getElementById("pw-error").style.display = "none";
+
+  // ▶ Intro starten
+  if (typeof startIntro === "function") {
+    startIntro();
+  }
+});
+
 
 
 

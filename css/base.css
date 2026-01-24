@@ -2,9 +2,17 @@ body.locked {
   overflow: hidden;
 }
 
-body.locked * {
+body.locked {
+  overflow: hidden;
+}
+
+/* NUR Lock-Screen blockieren, nicht alles */
+body.locked #scene,
+body.locked #mobileSwipe,
+body.locked #upload-ui {
   pointer-events: none;
 }
+
 
 body {
   margin: 0;
