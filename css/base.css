@@ -440,6 +440,11 @@ html, body {
   }
 
 }
+/* ===== Mobile Tabs müssen immer klickbar sein ===== */
+#mobileTabs,
+#mobileTabs * {
+  pointer-events: auto !important;
+}
 
 
 

@@ -19,7 +19,10 @@ function type() {
     }
   } else {
     setTimeout(() => {
-      document.getElementById("intro").style.opacity = "0";
+      const intro = document.getElementById("intro");
+      intro.style.opacity = "0";
+      intro.style.display = "none"; // 🔥 WICHTIG
+
       document.getElementById("intro").style.pointerEvents = "none";
       document.getElementById("scene").style.opacity = "1";
     }, 1200);

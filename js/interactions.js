@@ -115,6 +115,8 @@ document.getElementById("unlock").onclick = () => {
 
   if (entered === correctPassword) {
     document.body.classList.remove("locked");
+    document.body.style.pointerEvents = "auto";
+    document.body.style.overflow = "auto";
     document.getElementById("lockscreen").style.display = "none";
     document.getElementById("pw-error").style.display = "none";
 
