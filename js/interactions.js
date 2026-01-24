@@ -138,13 +138,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
-
-
-
-
-
 /* =========================
-   MOBILE: SWIPE CONTENT SETUP
+   MOBILE: CLONE CONTENT (SAFE)
 ========================= */
 document.addEventListener("DOMContentLoaded", () => {
   if (window.innerWidth > 768) return;
@@ -154,15 +149,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (!mobileImages || !mobileCard) return;
 
-  // Frames in Mobile-Bilder verschieben
+  // Frames CLONEN
   frames.forEach(frame => {
-    frame.classList.remove("focused", "dimmed");
-    mobileImages.appendChild(frame);
+    const clone = frame.cloneNode(true);
+    clone.classList.remove("focused", "dimmed");
+    mobileImages.appendChild(clone);
   });
 
-  // Karte verschieben
-  mobileCard.appendChild(card);
+  // Card CLONEN
+  const cardClone = card.cloneNode(true);
+  mobileCard.appendChild(cardClone);
 });
+
+
+
+
+
+
 
 /* =========================
    MOBILE: SWIPE SETUP
