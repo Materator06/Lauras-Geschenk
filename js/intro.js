@@ -20,11 +20,11 @@ function type() {
   } else {
     setTimeout(() => {
       const intro = document.getElementById("intro");
-      intro.style.opacity = "0";
-      intro.style.display = "none"; // 🔥 WICHTIG
+    intro.style.opacity = "0";
+    intro.style.display = "none";
+    document.getElementById("scene").style.opacity = "1";
 
-      document.getElementById("intro").style.pointerEvents = "none";
-      document.getElementById("scene").style.opacity = "1";
+
     }, 1200);
   }
 }

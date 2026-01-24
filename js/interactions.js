@@ -90,11 +90,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const index = Number(frameSelect.value);
     const reader = new FileReader();
 
-    reader.onload = ev => {
-      frames[index].querySelector("img").src = ev.target.result;
-      localStorage.setItem("frame-image-" + index, ev.target.result);
-      renderMobileImages();
-    };
+    
 
     reader.readAsDataURL(file);
   });
@@ -122,89 +118,11 @@ document.getElementById("unlock").onclick = () => {
 
     if (typeof startIntro === "function") startIntro();
 
-    if (isMobile) setTimeout(showImages, 200);
-  } else {
-    document.getElementById("pw-error").style.display = "block";
-  }
+   
 };
 
-/* =========================
-   MOBILE VIEW
-========================= */
-const mobileImages = document.getElementById("mobileImages");
-const mobileCard = document.getElementById("mobileCard");
-const tabImages = document.getElementById("tabImages");
-const tabCard = document.getElementById("tabCard");
 
-function renderMobileImages() {
-  if (!isMobile || !mobileImages) return;
 
-  mobileImages.innerHTML = "";
-
-  frames.forEach((frame, i) => {
-    const img = document.createElement("img");
-    img.src = frame.querySelector("img").src;
-    img.alt = "Bild " + (i + 1);
-    mobileImages.appendChild(img);
-  });
-}
-
-function showImages() {
-  if (!isMobile) return;
-  tabImages.classList.add("active");
-  tabCard.classList.remove("active");
-  mobileImages.style.display = "block";
-  mobileCard.style.display = "none";
-}
-
-function showCard() {
-  if (!isMobile) return;
-  tabCard.classList.add("active");
-  tabImages.classList.remove("active");
-  mobileCard.style.display = "flex";
-  mobileImages.style.display = "none";
-}
-
-tabImages?.addEventListener("click", showImages);
-tabCard?.addEventListener("click", showCard);
-
-document.addEventListener("DOMContentLoaded", () => {
-  if (isMobile) {
-    renderMobileImages();
-    showImages();
-    mobileCard.appendChild(card.cloneNode(true));
-  }
-});
-
-/* =========================
-   MOBILE TAB SWITCH
-========================= */
-if (window.innerWidth <= 768) {
-  const tabImages = document.getElementById("tabImages");
-  const tabCard = document.getElementById("tabCard");
-  const card = document.getElementById("card");
-  const frames = document.querySelectorAll(".frame");
-
-  // Start: Bilder sichtbar
-  card.style.display = "none";
-  frames.forEach(f => f.style.display = "block");
-
-  tabImages.addEventListener("click", () => {
-    tabImages.classList.add("active");
-    tabCard.classList.remove("active");
-
-    card.style.display = "none";
-    frames.forEach(f => f.style.display = "block");
-  });
-
-  tabCard.addEventListener("click", () => {
-    tabCard.classList.add("active");
-    tabImages.classList.remove("active");
-
-    card.style.display = "block";
-    frames.forEach(f => f.style.display = "none");
-  });
-}
 /* =========================
    MOBILE: SWIPE CONTENT SETUP
 ========================= */
@@ -217,6 +135,27 @@ document.addEventListener("DOMContentLoaded", () => {
   if (!mobileImages || !mobileCard) return;
 
   // Frames in Mobile-Bilder verschieben
+  frames.forEach(frame => {
+    frame.classList.remove("focused", "dimmed");
+    mobileImages.appendChild(frame);
+  });
+
+  // Karte verschieben
+  mobileCard.appendChild(card);
+});
+
+/* =========================
+   MOBILE: SWIPE SETUP
+========================= */
+document.addEventListener("DOMContentLoaded", () => {
+  if (window.innerWidth > 768) return;
+
+  const mobileImages = document.getElementById("mobileImages");
+  const mobileCard = document.getElementById("mobileCard");
+
+  if (!mobileImages || !mobileCard) return;
+
+  // Frames verschieben (ECHT, kein Clone!)
   frames.forEach(frame => {
     frame.classList.remove("focused", "dimmed");
     mobileImages.appendChild(frame);

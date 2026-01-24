@@ -107,30 +107,7 @@
     height: auto;
   }
 
-  /* Tabs */
-  #mobile-tabs {
-    display: flex;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    background: #000;
-    z-index: 100;
-  }
-
-  #mobile-tabs button {
-    flex: 1;
-    padding: 14px;
-    font-size: 16px;
-    border: none;
-    background: #111;
-    color: #fff;
-  }
-
-  #mobile-tabs button.active {
-    background: #ff9ecf;
-    color: #000;
-  }
+  
 
   /* Content spacing unter Tabs */
   #mobileImages,

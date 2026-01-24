@@ -284,31 +284,9 @@ html, body {
     overflow: hidden;
   }
 }
-/* ===== MOBILE LAYOUT ===== */
-@media (max-width: 768px) {
 
-  #mobileTabs {
-    position: fixed;
-    top: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 10px;
-    z-index: 9999;
-  }
 
-  #mobileTabs button {
-    background: #ffd6e8;
-    border: none;
-    padding: 10px 16px;
-    border-radius: 20px;
-    font-size: 14px;
-    cursor: pointer;
-  }
-
-  #mobileTabs button.active {
-    background: #ff9fcf;
-  }
+  
 
   /* Bilder-Ansicht */
   #mobileImages {
@@ -342,49 +320,18 @@ html, body {
     display: none;
   }
 }
-/* ===== MOBILE SAFE VIEW ===== */
-@media (max-width: 768px) {
 
-  #scene {
-    display: none;
-  }
 
-  #mobile-app {
-    display: block;
-  }
 
-  #mobile-images {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    padding: 90px 16px 16px;
-  }
 
-  #mobile-images img {
-    width: 100%;
-    border-radius: 18px;
-  }
-
-  #mobile-card {
-    padding-top: 90px;
-    display: flex;
-    justify-content: center;
-  }
-}
+ 
 /* Upload UI darf niemals deaktiviert werden */
 #upload-ui {
   pointer-events: auto !important;
   filter: none !important;
   opacity: 1 !important;
 }
-/* =========================
-   MOBILE VIEW
-========================= */
-@media (max-width: 768px) {
 
-  body {
-    overflow-y: auto;
-  }
 
   /* Desktop-Kreis aus */
   #camera {
@@ -502,6 +449,69 @@ html, body {
     display: none;
   }
 }
+
+/* =========================
+   MOBILE SWIPE LAYOUT
+========================= */
+@media (max-width: 768px) {
+
+  body {
+    overflow: hidden;
+  }
+
+  #scene {
+    display: none;
+  }
+
+  #mobileSwipe {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .mobile-page {
+    min-width: 100vw;
+    height: 100vh;
+    scroll-snap-align: start;
+    overflow-y: auto;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+
+  #mobileImages {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  #mobileImages .frame {
+    position: static !important;
+    width: 100%;
+    height: auto;
+    transform: none !important;
+  }
+
+  #mobileImages img {
+    width: 100%;
+    border-radius: 16px;
+  }
+
+  #mobileCard {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #card {
+    position: static;
+    transform: none;
+  }
+}
+
 
 
 
