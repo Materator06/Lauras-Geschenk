@@ -103,35 +103,42 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 /* =========================
-   PASSWORD LOCK (WORKING)
+   PASSWORD LOCK (FIXED)
 ========================= */
-const correctPassword = "laura";
+document.addEventListener("DOMContentLoaded", () => {
+  const correctPassword = "laura";
 
-const unlockBtn = document.getElementById("unlock");
-const pwInput = document.getElementById("pw");
-const lockscreen = document.getElementById("lockscreen");
-const error = document.getElementById("pw-error");
+  const unlockBtn = document.getElementById("unlock");
+  const pwInput = document.getElementById("pw");
+  const lockscreen = document.getElementById("lockscreen");
+  const error = document.getElementById("pw-error");
 
-unlockBtn.addEventListener("click", () => {
-  const entered = pwInput.value.trim().toLowerCase();
-
-  if (entered !== correctPassword) {
-    error.style.display = "block";
+  if (!unlockBtn || !pwInput || !lockscreen) {
+    console.error("Lockscreen elements missing");
     return;
   }
 
-  error.style.display = "none";
+  unlockBtn.addEventListener("click", () => {
+    const entered = pwInput.value.trim().toLowerCase();
 
-  document.body.classList.remove("locked");
-  document.body.style.overflow = "hidden";
+    if (entered !== correctPassword) {
+      error.style.display = "block";
+      return;
+    }
 
-  lockscreen.style.display = "none";
+    error.style.display = "none";
 
-  // Intro starten
-  if (typeof startIntro === "function") {
-    startIntro();
-  }
+    document.body.classList.remove("locked");
+    document.body.style.overflow = "hidden";
+
+    lockscreen.style.display = "none";
+
+    if (typeof startIntro === "function") {
+      startIntro();
+    }
+  });
 });
+
 
 
 
