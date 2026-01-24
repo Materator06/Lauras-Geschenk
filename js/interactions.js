@@ -205,3 +205,23 @@ if (window.innerWidth <= 768) {
     frames.forEach(f => f.style.display = "none");
   });
 }
+/* =========================
+   MOBILE: SWIPE CONTENT SETUP
+========================= */
+document.addEventListener("DOMContentLoaded", () => {
+  if (window.innerWidth > 768) return;
+
+  const mobileImages = document.getElementById("mobileImages");
+  const mobileCard = document.getElementById("mobileCard");
+
+  if (!mobileImages || !mobileCard) return;
+
+  // Frames in Mobile-Bilder verschieben
+  frames.forEach(frame => {
+    frame.classList.remove("focused", "dimmed");
+    mobileImages.appendChild(frame);
+  });
+
+  // Karte verschieben
+  mobileCard.appendChild(card);
+});
