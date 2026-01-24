@@ -103,27 +103,31 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 /* =========================
-   PASSWORD LOCK (FIXED)
+   PASSWORD LOCK (WORKING)
 ========================= */
 const correctPassword = "laura";
 
-document.getElementById("unlock").addEventListener("click", () => {
-  const entered = document.getElementById("pw").value.trim();
+const unlockBtn = document.getElementById("unlock");
+const pwInput = document.getElementById("pw");
+const lockscreen = document.getElementById("lockscreen");
+const error = document.getElementById("pw-error");
 
-  if (entered.toLowerCase() !== correctPassword.toLowerCase()) {
-    document.getElementById("pw-error").style.display = "block";
+unlockBtn.addEventListener("click", () => {
+  const entered = pwInput.value.trim().toLowerCase();
+
+  if (entered !== correctPassword) {
+    error.style.display = "block";
     return;
   }
 
-  // 🔓 ENTSPERREN
+  error.style.display = "none";
+
   document.body.classList.remove("locked");
-  document.body.style.pointerEvents = "auto";
   document.body.style.overflow = "hidden";
 
-  document.getElementById("lockscreen").style.display = "none";
-  document.getElementById("pw-error").style.display = "none";
+  lockscreen.style.display = "none";
 
-  // ▶ Intro starten
+  // Intro starten
   if (typeof startIntro === "function") {
     startIntro();
   }

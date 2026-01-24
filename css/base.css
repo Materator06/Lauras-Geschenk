@@ -2,16 +2,24 @@ body.locked {
   overflow: hidden;
 }
 
+/* ===== LOCKED STATE ===== */
 body.locked {
   overflow: hidden;
 }
 
-/* NUR Lock-Screen blockieren, nicht alles */
+/* Nur die eigentliche Seite blockieren */
 body.locked #scene,
 body.locked #mobileSwipe,
 body.locked #upload-ui {
   pointer-events: none;
 }
+
+/* Lockscreen IMMER klickbar */
+#lockscreen,
+#lockscreen * {
+  pointer-events: auto !important;
+}
+
 
 
 body {
