@@ -119,25 +119,37 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   unlockBtn.addEventListener("click", () => {
-    const entered = pwInput.value.trim().toLowerCase();
+  const entered = pwInput.value.trim().toLowerCase();
 
-    if (entered !== correctPassword) {
-      error.style.display = "block";
-      return;
-    }
+  if (entered !== correctPassword) {
+    error.style.display = "block";
+    return;
+  }
 
-    error.style.display = "none";
+  error.style.display = "none";
 
-    document.body.classList.remove("locked");
-    document.body.style.overflow = "hidden";
+  // LOCK AUF
+  document.body.classList.remove("locked");
+  lockscreen.style.display = "none";
 
-    lockscreen.style.display = "none";
+  // 👇 ENTSCHEIDEN: MOBILE ODER DESKTOP
+  if (window.innerWidth <= 768) {
+    // 📱 MOBILE
+    document.getElementById("mobileSwipe").style.display = "flex";
+    document.getElementById("scene").style.display = "none";
+  } else {
+    // 💻 DESKTOP
+    document.getElementById("scene").style.display = "block";
+    const mobile = document.getElementById("mobileSwipe");
+    if (mobile) mobile.style.display = "none";
+  }
 
-    if (typeof startIntro === "function") {
-      startIntro();
-    }
-  });
+  // Intro starten (optional)
+  if (typeof startIntro === "function") {
+    startIntro();
+  }
 });
+
 /* =========================
    MOBILE: CLONE CONTENT (SAFE)
 ========================= */
@@ -161,29 +173,3 @@ document.addEventListener("DOMContentLoaded", () => {
   mobileCard.appendChild(cardClone);
 });
 
-
-
-
-
-
-
-/* =========================
-   MOBILE: SWIPE SETUP
-========================= */
-document.addEventListener("DOMContentLoaded", () => {
-  if (window.innerWidth > 768) return;
-
-  const mobileImages = document.getElementById("mobileImages");
-  const mobileCard = document.getElementById("mobileCard");
-
-  if (!mobileImages || !mobileCard) return;
-
-  // Frames verschieben (ECHT, kein Clone!)
-  frames.forEach(frame => {
-    frame.classList.remove("focused", "dimmed");
-    mobileImages.appendChild(frame);
-  });
-
-  // Karte verschieben
-  mobileCard.appendChild(card);
-});

@@ -9,7 +9,6 @@ body.locked {
 
 /* Nur die eigentliche Seite blockieren */
 body.locked #scene,
-body.locked #mobileSwipe,
 body.locked #upload-ui {
   pointer-events: none;
 }
