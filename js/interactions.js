@@ -206,5 +206,8 @@ frames.forEach((frame, i) => {
    🚫 PREVENT SCROLL LOCK ISSUES
 ====================================================== */
 document.addEventListener("touchmove", e => {
-  if (focusedElement) e.preventDefault();
+  if (focusedElement && window.innerWidth > 768) {
+    e.preventDefault();
+  }
 }, { passive: false });
+

@@ -211,9 +211,16 @@ body.locked * {
 /* ======================================================
    📱 MOBILE TOUCH FIXES
 ====================================================== */
-#scene {
-  touch-action: pan-x pan-y;
+@media (max-width: 768px) {
+  #scene {
+    touch-action: pan-y;
+  }
+
+  #stage {
+    touch-action: pan-x;
+  }
 }
+
 
 .frame {
   touch-action: pan-y;
@@ -221,4 +228,11 @@ body.locked * {
 
 .frame img {
   touch-action: pan-y;
+}
+@media (max-width: 768px) {
+  body {
+    overflow-y: auto;
+    overflow-x: hidden;
+    touch-action: pan-y;
+  }
 }
