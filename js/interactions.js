@@ -4,10 +4,10 @@ console.log("interactions.js loaded");
    🔧 GLOBAL ELEMENTS
 ====================================================== */
 const body = document.body;
-
 const frames = document.querySelectorAll(".frame");
 const card = document.getElementById("card");
 const stage = document.getElementById("stage");
+const framesContainer = document.getElementById("frames");
 
 const uploadUI = document.getElementById("uploadUI");
 const frameSelector = document.getElementById("frameSelector");
@@ -28,9 +28,9 @@ const passwordError = document.getElementById("passwordError");
 const lockscreen = document.getElementById("lockscreen");
 
 unlockButton.addEventListener("click", () => {
-  const entered = passwordInput.value.trim().toLowerCase();
+  const entered = passwordInput.value.trim();
 
-  if (entered === correctPassword.toLowerCase()) {
+  if (entered === correctPassword) {
     body.classList.remove("locked");
     lockscreen.style.display = "none";
     passwordError.style.display = "none";
@@ -46,18 +46,17 @@ unlockButton.addEventListener("click", () => {
 });
 
 /* ======================================================
-   🎯 FOCUS SYSTEM (DESKTOP ONLY)
+   🎯 DESKTOP FOCUS SYSTEM (UNVERÄNDERT)
 ====================================================== */
 let focusedElement = null;
 
 function setFocus(el) {
-  if (isMobile()) return; // ❌ NIE auf Mobile
+  if (isMobile()) return;
 
   if (focusedElement === el) return;
-
   clearFocus();
-  focusedElement = el;
 
+  focusedElement = el;
   el.classList.add("focused");
 
   [...frames, card].forEach(e => {
@@ -83,9 +82,6 @@ function clearFocus() {
   card.classList.remove("open");
 }
 
-/* ======================================================
-   🖼️ FRAME INTERACTIONS
-====================================================== */
 frames.forEach(frame => {
   frame.addEventListener("click", e => {
     if (isMobile()) return;
@@ -94,9 +90,6 @@ frames.forEach(frame => {
   });
 });
 
-/* ======================================================
-   💌 CARD INTERACTIONS
-====================================================== */
 card.addEventListener("click", e => {
   e.stopPropagation();
 
@@ -112,10 +105,6 @@ card.addEventListener("click", e => {
   }
 });
 
-
-/* ======================================================
-   🌫️ CLEAR FOCUS ON EMPTY CLICK
-====================================================== */
 document.addEventListener("click", () => {
   if (!isMobile()) clearFocus();
 });
@@ -143,7 +132,6 @@ function positionFramesOval() {
 
     frame.style.left = `${x - frame.offsetWidth / 2}px`;
     frame.style.top = `${y - frame.offsetHeight / 2}px`;
-
     frame.style.zIndex = Math.floor(y);
   });
 }
@@ -152,31 +140,47 @@ window.addEventListener("resize", positionFramesOval);
 window.addEventListener("load", positionFramesOval);
 
 /* ======================================================
-   📱 MOBILE SWIPE (IMAGES ↔ CARD)
+   📱 MOBILE SWIPE SYSTEM (STABIL)
 ====================================================== */
 let startX = 0;
 let startY = 0;
 let currentView = 0;
+let isSwiping = false;
 
-stage.addEventListener("touchstart", e => {
-  startX = e.touches[0].clientX;
-  startY = e.touches[0].clientY;
-}, { passive: true });
+stage.addEventListener(
+  "touchstart",
+  e => {
+    if (!isMobile()) return;
 
-stage.addEventListener("touchend", e => {
-  const dx = e.changedTouches[0].clientX - startX;
-  const dy = e.changedTouches[0].clientY - startY;
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+    isSwiping = true;
+  },
+  { passive: true }
+);
 
-  // Nur klarer horizontaler Swipe
-  if (Math.abs(dx) < 70) return;
-  if (Math.abs(dx) < Math.abs(dy)) return;
+stage.addEventListener(
+  "touchend",
+  e => {
+    if (!isMobile() || !isSwiping) return;
+    isSwiping = false;
 
-  if (dx < 0 && currentView === 0) currentView = 1;
-  if (dx > 0 && currentView === 1) currentView = 0;
+    const dx = e.changedTouches[0].clientX - startX;
+    const dy = e.changedTouches[0].clientY - startY;
 
-  stage.style.transform = `translateX(-${currentView * 100}vw)`;
-});
+    /* ❗ Vertikales Scrollen IMMER erlauben */
+    if (Math.abs(dy) > Math.abs(dx)) return;
 
+    /* ❗ Mini-Bewegungen ignorieren */
+    if (Math.abs(dx) < 80) return;
+
+    if (dx < 0 && currentView === 0) currentView = 1;
+    if (dx > 0 && currentView === 1) currentView = 0;
+
+    stage.style.transform = `translateX(-${currentView * 100}vw)`;
+  },
+  { passive: true }
+);
 
 /* ======================================================
    🎁 IMAGE UPLOAD + STORAGE

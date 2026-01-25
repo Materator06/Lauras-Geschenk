@@ -11,7 +11,7 @@
 }
 
 /* ======================================================
-   🎥 STAGE
+   🎥 STAGE (DESKTOP)
 ====================================================== */
 #stage {
   position: fixed;
@@ -20,7 +20,7 @@
 }
 
 /* ======================================================
-   🖼️ FRAMES CONTAINER
+   🖼️ FRAMES CONTAINER (DESKTOP)
 ====================================================== */
 #frames {
   position: absolute;
@@ -126,37 +126,39 @@
 }
 
 /* ======================================================
-   📱 MOBILE MODE (SAUBER & GETRENNT)
+   📱 MOBILE MODE (KOMPLETT GETRENNT)
 ====================================================== */
 @media (max-width: 768px) {
 
-  /* Szene selbst NICHT scrollen */
+  /* Szene scrollt NICHT */
   #scene {
     position: relative;
     min-height: 100vh;
     overflow: hidden;
   }
 
-  /* Bühne für Swipe */
+  /* Bühne = Swipe-Container */
   #stage {
     position: relative;
     display: flex;
-    flex-direction: row;
     width: 200vw;
     height: 100vh;
     transition: transform 0.6s ease;
   }
 
   /* =========================
-     🖼️ BILDER = SCROLL-CONTAINER
+     📸 BILDER-SEITE (SCROLLBAR)
   ========================= */
   #frames {
+    position: relative;
     width: 100vw;
     height: 100vh;
-    overflow-y: auto;                /* 🔥 DAS ist der Fix */
+
+    overflow-y: auto;
     -webkit-overflow-scrolling: touch;
 
     padding: 90px 18px 40px;
+
     display: flex;
     flex-direction: column;
     gap: 24px;
@@ -178,25 +180,21 @@
   }
 
   /* =========================
-     💌 KARTE (keine Scroll)
+     💌 KARTEN-SEITE (MITTIG)
   ========================= */
-@media (max-width: 768px) {
-
-  /* Karte ist eine eigene Seite */
   #card {
+    position: relative;
     width: 100vw;
     height: 100vh;
     flex-shrink: 0;
 
-    position: relative;
-    transform: none !important;
-
     display: flex;
     align-items: center;
     justify-content: center;
+
+    transform: none !important;
   }
 
-  /* Inner bleibt NUR für Flip zuständig */
   #cardInner {
     width: 90%;
     max-width: 420px;
@@ -206,17 +204,15 @@
     transition: transform 0.9s cubic-bezier(.2,.85,.25,1);
   }
 
-  /* ❗ KEIN Zoom / Fokus auf Mobile */
+  /* ❌ KEIN Fokus / Zoom auf Mobile */
   .frame.focused,
   #card.focused {
     transform: none !important;
   }
-}}
-
-
+}
 
 /* ======================================================
-   🌙 SCENE MOOD (rein visuell)
+   🌙 SCENE MOOD (NUR VISUELL)
 ====================================================== */
 #scene::before {
   content: "";
