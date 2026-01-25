@@ -190,7 +190,7 @@
 
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     padding-top: 120px;
   }
 
@@ -198,9 +198,6 @@
     width: 90%;
     max-width: 420px;
     height: 240px;
-    touch-action: manipulation;
-
-
   }
 
   /* Kein Zoom auf Mobile */
@@ -208,27 +205,6 @@
   #card.focused {
     transform: none !important;
   }
-}
-@media (max-width: 768px) {
-
-  #swipeLayer {
-    position: fixed;
-    inset: 0;
-    z-index: 50;
-    background: transparent;
-
-    /* 🔥 WICHTIG */
-    touch-action: pan-y; /* erlaubt Scroll nach oben/unten */
-  }
-
-  #frames {
-    position: relative;
-    z-index: 10;
-    height: 100vh;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-
 }
 
 
