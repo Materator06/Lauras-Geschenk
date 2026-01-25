@@ -157,16 +157,16 @@ let startX = 0;
 let startY = 0;
 let currentView = 0;
 
-swipeLayer.addEventListener("touchstart", e => {
+stage.addEventListener("touchstart", e => {
   startX = e.touches[0].clientX;
   startY = e.touches[0].clientY;
 }, { passive: true });
 
-swipeLayer.addEventListener("touchend", e => {
+stage.addEventListener("touchend", e => {
   const dx = e.changedTouches[0].clientX - startX;
   const dy = e.changedTouches[0].clientY - startY;
 
-  // Nur WIRKLICH horizontal swipen
+  // Nur klarer horizontaler Swipe
   if (Math.abs(dx) < 70) return;
   if (Math.abs(dx) < Math.abs(dy)) return;
 
@@ -175,6 +175,7 @@ swipeLayer.addEventListener("touchend", e => {
 
   stage.style.transform = `translateX(-${currentView * 100}vw)`;
 });
+
 
 /* ======================================================
    🎁 IMAGE UPLOAD + STORAGE
