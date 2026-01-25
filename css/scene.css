@@ -126,18 +126,19 @@
 }
 
 /* ======================================================
-   📱 MOBILE MODE (SAUBER & GETRENNT)
+   📱 MOBILE MODE – STABIL & FUNKTIONIEREND
 ====================================================== */
 @media (max-width: 768px) {
 
-  /* Szene selbst NICHT scrollen */
+  /* Szene selbst */
   #scene {
     position: relative;
-    min-height: 100vh;
+    width: 100vw;
+    height: 100vh;
     overflow: hidden;
   }
 
-  /* Bühne für Swipe */
+  /* Swipe-Bühne */
   #stage {
     position: relative;
     display: flex;
@@ -148,12 +149,15 @@
   }
 
   /* =========================
-     🖼️ BILDER = SCROLL-CONTAINER
+     🖼️ BILDER – SEITE 1
   ========================= */
   #frames {
+    position: relative;        /* 🔥 überschreibt absolute */
     width: 100vw;
     height: 100vh;
-    overflow-y: auto;                /* 🔥 DAS ist der Fix */
+    flex-shrink: 0;            /* 🔥 extrem wichtig */
+
+    overflow-y: auto;
     -webkit-overflow-scrolling: touch;
 
     padding: 90px 18px 40px;
@@ -166,7 +170,6 @@
     position: relative !important;
     width: 100%;
     max-width: 480px;
-    height: auto;
     margin: 0 auto;
     transform: none !important;
   }
@@ -178,25 +181,21 @@
   }
 
   /* =========================
-     💌 KARTE (keine Scroll)
+     💌 KARTE – SEITE 2
   ========================= */
-@media (max-width: 768px) {
-
-  /* Karte ist eine eigene Seite */
   #card {
+    position: relative;
     width: 100vw;
     height: 100vh;
     flex-shrink: 0;
 
-    position: relative;
-    transform: none !important;
-
     display: flex;
     align-items: center;
     justify-content: center;
+
+    transform: none !important;
   }
 
-  /* Inner bleibt NUR für Flip zuständig */
   #cardInner {
     width: 90%;
     max-width: 420px;
@@ -206,12 +205,12 @@
     transition: transform 0.9s cubic-bezier(.2,.85,.25,1);
   }
 
-  /* ❗ KEIN Zoom / Fokus auf Mobile */
+  /* Kein Desktop-Fokus-Zoom auf Mobile */
   .frame.focused,
   #card.focused {
     transform: none !important;
   }
-}}
+}
 
 
 
