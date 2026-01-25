@@ -180,33 +180,39 @@
   /* =========================
      💌 KARTE (keine Scroll)
   ========================= */
- #card {
-  width: 100vw;
-  height: 100vh;
-  flex-shrink: 0;
+@media (max-width: 768px) {
 
-  position: relative;
-}
+  /* Karte ist eine eigene Seite */
+  #card {
+    width: 100vw;
+    height: 100vh;
+    flex-shrink: 0;
 
-/* 🔥 DAS ist die echte Zentrierung */
-#cardInner {
-  position: absolute;
-  left: 95%;
-  top: 60%;
+    position: relative;
+    transform: none !important;
 
-  transform: translate(-50%, -50%);
-  width: 90%;
-  max-width: 420px;
-  height: 240px;
-}
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
+  /* Inner bleibt NUR für Flip zuständig */
+  #cardInner {
+    width: 90%;
+    max-width: 420px;
+    height: 240px;
 
-  /* Kein Zoom auf Mobile */
+    transform-style: preserve-3d;
+    transition: transform 0.9s cubic-bezier(.2,.85,.25,1);
+  }
+
+  /* ❗ KEIN Zoom / Fokus auf Mobile */
   .frame.focused,
   #card.focused {
     transform: none !important;
   }
 }
+
 
 
 /* ======================================================

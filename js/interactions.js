@@ -101,7 +101,7 @@ card.addEventListener("click", e => {
   e.stopPropagation();
 
   if (isMobile()) {
-    card.classList.toggle("open"); // 📱 nur umdrehen
+    card.classList.toggle("open");
     return;
   }
 
@@ -111,6 +111,7 @@ card.addEventListener("click", e => {
     card.classList.toggle("open");
   }
 });
+
 
 /* ======================================================
    🌫️ CLEAR FOCUS ON EMPTY CLICK
