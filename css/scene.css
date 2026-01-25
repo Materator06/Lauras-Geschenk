@@ -226,3 +226,15 @@
   );
   pointer-events: none;
 }
+/* ======================================================
+   💌 CARD EXPAND (DESKTOP ONLY)
+====================================================== */
+
+#card.expanded {
+  height: 420px;
+  transition: height 0.8s cubic-bezier(.2,.85,.25,1);
+}
+
+#cardBack {
+  overflow-y: auto;
+}

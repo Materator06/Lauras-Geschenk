@@ -3,6 +3,7 @@ console.log("interactions.js loaded");
 /* ======================================================
    🔧 GLOBAL ELEMENTS
 ====================================================== */
+let cardExpanded = false;
 const body = document.body;
 const frames = document.querySelectorAll(".frame");
 const card = document.getElementById("card");
@@ -80,6 +81,9 @@ function clearFocus() {
   );
 
   card.classList.remove("open");
+  card.classList.remove("expanded");
+  cardExpanded = false;
+
 }
 
 frames.forEach(frame => {
@@ -93,17 +97,36 @@ frames.forEach(frame => {
 card.addEventListener("click", e => {
   e.stopPropagation();
 
+  // 📱 Mobile: nur flip
   if (isMobile()) {
     card.classList.toggle("open");
     return;
   }
 
+  // 🖥️ Desktop
   if (!card.classList.contains("focused")) {
     setFocus(card);
-  } else {
-    card.classList.toggle("open");
+    card.classList.add("open");
+    cardExpanded = false;
+    card.classList.remove("expanded");
+    return;
+  }
+
+  // 1️⃣ Klick: öffnen
+  if (!card.classList.contains("open")) {
+    card.classList.add("open");
+    cardExpanded = false;
+    card.classList.remove("expanded");
+    return;
+  }
+
+  // 2️⃣ Klick: erweitern
+  if (!cardExpanded) {
+    card.classList.add("expanded");
+    cardExpanded = true;
   }
 });
+
 
 document.addEventListener("click", () => {
   if (!isMobile()) clearFocus();
