@@ -20,7 +20,7 @@ const isMobile = () => window.innerWidth <= 768;
 /* ======================================================
    🔒 PASSWORD LOCK
 ====================================================== */
-const correctPassword = "laura";
+const correctPassword = "250125";
 
 const unlockButton = document.getElementById("unlockButton");
 const passwordInput = document.getElementById("passwordInput");
