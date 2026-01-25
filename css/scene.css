@@ -73,11 +73,19 @@
   top: 50%;
   width: 300px;
   height: 210px;
+
   transform: translate(-50%, -50%);
+  transform-origin: top center;
+
   perspective: 2000px;
   z-index: 5;
   cursor: pointer;
+
+  transition:
+    height 0.8s cubic-bezier(.2,.85,.25,1),
+    transform 0.8s cubic-bezier(.2,.85,.25,1);
 }
+
 
 #cardInner {
   width: 100%;
@@ -231,8 +239,8 @@
 ====================================================== */
 
 #card.expanded {
-  height: 420px;
-  transition: height 0.8s cubic-bezier(.2,.85,.25,1);
+  height: 440px;
+  transform: translate(-50%, -30%);
 }
 
 #cardBack {
