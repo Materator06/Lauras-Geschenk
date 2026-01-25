@@ -1,5 +1,5 @@
 /* ======================================================
-   🌆 SCENE / BACKGROUND
+   🌆 SCENE / BACKGROUND (DESKTOP UNVERÄNDERT)
 ====================================================== */
 #scene {
   position: fixed;
@@ -115,7 +115,7 @@
 }
 
 /* ======================================================
-   🎯 FOCUS OVERRIDES
+   🎯 FOCUS OVERRIDES (DESKTOP)
 ====================================================== */
 .frame.focused {
   transform: translate(-50%, -50%) scale(2.2) !important;
@@ -126,32 +126,37 @@
 }
 
 /* ======================================================
-   📱 MOBILE MODE
+   📱 MOBILE MODE (SAUBER & GETRENNT)
 ====================================================== */
 @media (max-width: 768px) {
 
+  /* Szene darf scrollen */
   #scene {
     position: relative;
-    opacity: 1;
     min-height: 100vh;
+    opacity: 1;
     overflow-y: auto;
   }
 
+  /* Bühne = horizontale Swipe-Fläche */
   #stage {
     position: relative;
     display: flex;
     flex-direction: row;
     width: 200vw;
-    transition: transform 0.6s ease;
+    transform: translateX(0);
+    transition: transform 0.6s cubic-bezier(.2,.85,.25,1);
   }
 
   /* =========================
-     🖼️ MOBILE IMAGES VIEW
+     🖼️ BILDER-SPALTE
   ========================= */
   #frames {
     position: relative;
     width: 100vw;
-    padding: 90px 18px 30px;
+    flex-shrink: 0;
+
+    padding: 100px 18px 40px;
     display: flex;
     flex-direction: column;
     gap: 24px;
@@ -159,6 +164,10 @@
 
   .frame {
     position: relative !important;
+    left: auto !important;
+    top: auto !important;
+    transform: none !important;
+
     width: 100%;
     max-width: 480px;
     height: auto;
@@ -166,21 +175,26 @@
   }
 
   .frame img {
+    width: 100%;
     height: auto;
     aspect-ratio: 4 / 3;
   }
 
   /* =========================
-     💌 MOBILE CARD VIEW
+     💌 KARTEN-SPALTE
   ========================= */
   #card {
     position: relative;
     width: 100vw;
-    height: auto;
-    margin-top: 120px;
+    flex-shrink: 0;
+
+    left: auto;
+    top: auto;
     transform: none !important;
+
     display: flex;
     justify-content: center;
+    padding-top: 120px;
   }
 
   #cardInner {
@@ -189,34 +203,24 @@
     height: 240px;
   }
 
-  #cardFront,
-  #cardBack {
-    position: absolute;
-  }
-
-  /* Fokus auf Mobile softer */
-  .frame.focused {
-    transform: scale(1.05) !important;
-  }
-
+  /* Mobile Fokus = kein Zoom */
+  .frame.focused,
   #card.focused {
     transform: scale(1.05) !important;
   }
 }
+
 /* ======================================================
-   🌙 SCENE MOOD
+   🌙 SCENE MOOD (rein visuell)
 ====================================================== */
 #scene::before {
   content: "";
   position: absolute;
   inset: 0;
-
   background: radial-gradient(
     circle at center,
     rgba(255, 120, 180, 0.12),
     transparent 65%
   );
-
   pointer-events: none;
 }
-

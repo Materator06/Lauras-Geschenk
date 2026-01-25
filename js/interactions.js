@@ -142,25 +142,29 @@ window.addEventListener("load", positionFramesOval);
    📱 MOBILE SWIPE (IMAGES ↔ CARD)
 ====================================================== */
 let startX = 0;
-let currentView = 0; // 0 = images, 1 = card
+let startY = 0;
+let currentView = 0;
 
 stage.addEventListener("touchstart", e => {
   startX = e.touches[0].clientX;
-});
+  startY = e.touches[0].clientY;
+}, { passive: true });
 
 stage.addEventListener("touchend", e => {
-  const deltaX = e.changedTouches[0].clientX - startX;
+  const dx = e.changedTouches[0].clientX - startX;
+  const dy = e.changedTouches[0].clientY - startY;
 
-  if (Math.abs(deltaX) < 60) return;
+  // 🔥 Wenn mehr vertikal als horizontal → Scroll erlauben
+  if (Math.abs(dy) > Math.abs(dx)) return;
 
-  if (deltaX < 0 && currentView === 0) {
-    currentView = 1;
-  } else if (deltaX > 0 && currentView === 1) {
-    currentView = 0;
-  }
+  if (Math.abs(dx) < 60) return;
+
+  if (dx < 0 && currentView === 0) currentView = 1;
+  if (dx > 0 && currentView === 1) currentView = 0;
 
   stage.style.transform = `translateX(-${currentView * 100}vw)`;
 });
+
 
 /* ======================================================
    🎁 IMAGE UPLOAD + STORAGE
@@ -210,4 +214,5 @@ document.addEventListener("touchmove", e => {
     e.preventDefault();
   }
 }, { passive: false });
+
 
