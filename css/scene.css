@@ -246,3 +246,23 @@
 #cardBack {
   overflow-y: auto;
 }
+/* ======================================================
+   🚫 SCROLLBAR VERSTECKEN (KARTE)
+====================================================== */
+#cardBack {
+  overflow-y: auto;
+
+  /* Firefox */
+  scrollbar-width: none;
+
+  /* IE / Edge alt */
+  -ms-overflow-style: none;
+}
+
+/* Chrome / Safari / Mobile */
+#cardBack::-webkit-scrollbar {
+  display: none;
+}
+#cardBack {
+  scroll-behavior: smooth;
+}
