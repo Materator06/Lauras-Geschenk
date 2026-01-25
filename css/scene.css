@@ -191,8 +191,8 @@
 /* 🔥 DAS ist die echte Zentrierung */
 #cardInner {
   position: absolute;
-  left: 5%;
-  top: 50%;
+  left: 95%;
+  top: 60%;
 
   transform: translate(-50%, -50%);
   width: 90%;
