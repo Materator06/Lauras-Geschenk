@@ -181,18 +181,17 @@
      💌 KARTE (keine Scroll)
   ========================= */
   #card {
-    width: 100vw;
-    height: 100vh;
-    flex-shrink: 0;
+  position: relative;
+  width: 100vw;
+  height: 100vh;
 
-    position: relative;
-    transform: none !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    padding-top: 120px;
-  }
+  transform: none !important;
+}
+
 
   #cardInner {
     width: 90%;
