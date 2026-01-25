@@ -193,6 +193,7 @@
     justify-content: center;
 
     transform: none !important;
+    z-index: 1; 
   }
 
   #cardInner {
