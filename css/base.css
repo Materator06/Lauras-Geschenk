@@ -1,6 +1,28 @@
-/* =========================
-   LOCKSCREEN
-========================= */
+/* ======================================================
+   RESET & GLOBALS
+====================================================== */
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: monospace;
+  background: black;
+  color: white;
+  overflow: hidden;
+  touch-action: manipulation;
+}
+
+/* ======================================================
+   🔒 LOCKED STATE
+====================================================== */
 body.locked {
   overflow: hidden;
 }
@@ -9,320 +31,194 @@ body.locked * {
   pointer-events: none;
 }
 
-#lockscreen {
-  position: fixed;
-  inset: 0;
-  background: black;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 10000;
-}
-
-.lockbox {
-  background: rgba(255,255,255,0.05);
-  padding: 30px;
-  border-radius: 20px;
-  text-align: center;
-  color: white;
-  font-family: monospace;
-  box-shadow: 0 0 40px rgba(255,158,207,0.4);
-}
-
-.lockbox input {
-  padding: 10px;
-  margin-top: 10px;
-  border-radius: 8px;
-  border: none;
-  width: 200px;
-  font-size: 16px;
-}
-
-.lockbox button {
-  margin-top: 12px;
-  padding: 10px 16px;
-  border-radius: 8px;
-  border: none;
-  background: #ff9ecf;
-  font-family: monospace;
-  cursor: pointer;
-}
-
-#pw-error {
-  color: #ff6b6b;
-  display: none;
-  margin-top: 10px;
-}
-
-/* Lockscreen immer klickbar */
+/* Lockscreen darf IMMER klickbar sein */
 #lockscreen,
 #lockscreen * {
   pointer-events: auto !important;
 }
 
-/* =========================
-   BODY & GLOBALS
-========================= */
-body {
-  margin: 0;
-  overflow: hidden;
-  font-family: monospace;
-  background: black;
-  max-width: 100%;
-  overflow-x: hidden;
-  touch-action: manipulation;
+/* ======================================================
+   🔒 LOCKSCREEN
+====================================================== */
+#lockscreen {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(
+    circle at top,
+    #2a0018,
+    #000
+  );
 }
 
-.frame, #card {
-  transition: transform 0.8s cubic-bezier(.2,.85,.25,1);
+.lockbox {
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(14px);
+  border-radius: 24px;
+  padding: 36px 40px;
+  text-align: center;
+  box-shadow:
+    0 30px 80px rgba(0, 0, 0, 0.6),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.25);
 }
 
+.lockbox h2 {
+  margin: 0 0 18px;
+  font-size: 22px;
+}
+
+.lockbox input {
+  width: 220px;
+  padding: 12px 14px;
+  font-size: 16px;
+  border-radius: 14px;
+  border: none;
+  outline: none;
+  margin-bottom: 14px;
+}
+
+.lockbox button {
+  padding: 12px 18px;
+  border-radius: 14px;
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: bold;
+  background: linear-gradient(135deg, #ff9ecf, #ffd6e7);
+  color: #4a0028;
+  box-shadow: 0 10px 30px rgba(255, 158, 207, 0.6);
+}
+
+#passwordError {
+  display: none;
+  margin-top: 14px;
+  color: #ff6b6b;
+  font-size: 14px;
+}
+
+/* ======================================================
+   🎯 FOCUS SYSTEM
+====================================================== */
 .focused {
   position: fixed !important;
   left: 50% !important;
   top: 50% !important;
-  transform: translate(-50%, -50%) scale(2.4) !important;
+  transform: translate(-50%, -50%) scale(2.2) !important;
   z-index: 5000 !important;
   isolation: isolate;
   transition:
+    transform 0.8s cubic-bezier(.2,.85,.25,1),
     left 0.8s cubic-bezier(.2,.85,.25,1),
-    top 0.8s cubic-bezier(.2,.85,.25,1),
-    transform 0.8s cubic-bezier(.2,.85,.25,1);
-}
-
-/* Frames beim Fokus */
-.frame.focused {
-  position: fixed !important;
-  left: 50% !important;
-  top: 50% !important;
-  transform: translate(-50%, -50%) scale(2.4) !important;
-  transition:
-    left 0.8s cubic-bezier(.2,.85,.25,1),
-    top 0.8s cubic-bezier(.2,.85,.25,1),
-    transform 0.8s cubic-bezier(.2,.85,.25,1);
+    top 0.8s cubic-bezier(.2,.85,.25,1);
 }
 
 .dimmed {
-  filter: blur(3px) brightness(0.3);
+  filter: blur(3px) brightness(0.35);
   pointer-events: none;
 }
 
-/* =========================
-   UPLOAD UI
-========================= */
-#upload-ui {
-  pointer-events: auto !important;
-  z-index: 2000;
+/* ======================================================
+   🎁 UPLOAD UI
+====================================================== */
+#uploadUI {
   position: fixed;
   right: 24px;
   bottom: 24px;
+  z-index: 3000;
   display: flex;
   gap: 10px;
   align-items: center;
+
   padding: 12px 14px;
-  border-radius: 20px;
+  border-radius: 22px;
   background: rgba(255, 214, 231, 0.18);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px);
+
   box-shadow:
-    0 10px 30px rgba(0,0,0,0.35),
-    inset 0 0 0 1px rgba(255,255,255,0.3);
+    0 16px 40px rgba(0,0,0,0.4),
+    inset 0 0 0 1px rgba(255,255,255,0.35);
+
+  pointer-events: auto !important;
 }
 
-#upload-ui select,
-#upload-ui input {
-  background: rgba(255, 158, 207, 0.6);
-  color: #333;
+#uploadUI select {
+  padding: 8px 10px;
+  border-radius: 12px;
   border: none;
-  padding: 6px 10px;
-  border-radius: 10px;
   font-family: monospace;
   font-weight: bold;
   cursor: pointer;
-  box-shadow: 0 6px 16px rgba(255, 158, 207, 0.6);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-#upload-ui button {
-  background: linear-gradient(135deg, #ff9ecf, #ffd6e7);
-  color: #4a0028;
-  border: none;
-  padding: 8px 14px;
-  border-radius: 14px;
-  font-family: monospace;
-  font-weight: bold;
-  cursor: pointer;
-  box-shadow: 0 6px 16px rgba(255, 158, 207, 0.6);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-#upload-ui button:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 10px 24px rgba(255, 158, 207, 0.8);
   background: #ffd6e7;
 }
 
-/* ===== Custom File Button ===== */
-.file-btn {
-  background: linear-gradient(135deg, #ffd6e7, #ff9ecf);
-  color: #4a0028;
+#uploadUI button,
+#imageLabel {
   padding: 8px 14px;
   border-radius: 14px;
+  border: none;
+  cursor: pointer;
   font-family: monospace;
   font-weight: bold;
-  cursor: pointer;
+  background: linear-gradient(135deg, #ff9ecf, #ffd6e7);
+  color: #4a0028;
+  box-shadow: 0 8px 20px rgba(255, 158, 207, 0.6);
   user-select: none;
-  box-shadow: 0 6px 16px rgba(255, 158, 207, 0.6);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.file-btn:hover {
+#uploadUI button:hover,
+#imageLabel:hover {
   transform: translateY(-1px);
-  box-shadow: 0 10px 24px rgba(255, 158, 207, 0.8);
+  box-shadow: 0 12px 30px rgba(255, 158, 207, 0.8);
 }
 
-/* =========================
-   MOBILE FIXES
-========================= */
+/* Upload UI niemals dimmen */
+#uploadUI.dimmed {
+  filter: none !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+
+/* ======================================================
+   📱 MOBILE GLOBALS
+====================================================== */
 @media (max-width: 768px) {
-  .frame {
-    width: 140px;
-    height: 110px;
-    max-width: 45vw;
-    max-height: 30vh;
+
+  body {
+    overflow-y: auto;
   }
 
-  .frame img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .frame.focused {
-    transform: translate(-50%, -50%) scale(1.5) !important;
-  }
-
-  #card.focused {
+  .focused {
     transform: translate(-50%, -50%) scale(1.4) !important;
   }
 
-  #upload-ui {
+  #uploadUI {
     right: 12px;
     bottom: 12px;
     padding: 10px;
     gap: 6px;
   }
 
-  #upload-ui select,
-  #upload-ui input,
-  #upload-ui button,
-  .file-btn {
-    font-size: 16px;
+  #uploadUI select,
+  #uploadUI button,
+  #imageLabel {
+    font-size: 14px;
     padding: 10px 12px;
   }
 }
-
-/* =========================
-   Mobile Tabs & Scroll
-========================= */
-@media (max-width: 768px) {
-  #mobileTabs {
-    position: fixed;
-    top: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 10px;
-    z-index: 9999;
-  }
-
-  #mobileTabs button {
-    background: #ffd6e8;
-    border: none;
-    padding: 10px 16px;
-    border-radius: 20px;
-    font-size: 14px;
-    cursor: pointer;
-  }
-
-  #mobileTabs button.active {
-    background: #ff9fcf;
-  }
-
-  #mobileImages {
-    margin-top: 70px;
-    height: calc(100vh - 70px);
-    overflow-y: auto;
-    scroll-behavior: smooth;
-    padding: 20px;
-    display: none;
-  }
-
-  #mobileImages img {
-    width: 100%;
-    max-width: 100%;
-    border-radius: 16px;
-    margin-bottom: 20px;
-  }
-
-  #mobileCard {
-    margin-top: 70px;
-    height: calc(100vh - 70px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  /* Desktop-Elemente ausblenden */
-  .frame,
-  #camera {
-    display: none;
-  }
-
-  #scene {
-    display: none;
-  }
-
-  #mobile-app {
-    display: block;
-  }
-
-  #mobile-images {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    padding: 90px 16px 16px;
-  }
-
-  #mobile-images img {
-    width: 100%;
-    border-radius: 18px;
-  }
-
-  #mobile-card {
-    padding-top: 90px;
-    display: flex;
-    justify-content: center;
-  }
+/* ======================================================
+   📱 MOBILE TOUCH FIXES
+====================================================== */
+#scene {
+  touch-action: pan-x pan-y;
 }
 
-/* Upload UI darf niemals deaktiviert werden */
-#upload-ui {
-  pointer-events: auto !important;
-  filter: none !important;
-  opacity: 1 !important;
+.frame {
+  touch-action: pan-y;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+.frame img {
+  touch-action: pan-y;
+}

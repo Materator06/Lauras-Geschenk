@@ -1,48 +1,102 @@
 console.log("intro.js loaded");
 
-/* =========================
-   INTRO TEXT
-========================= */
-const text = [
+/* ======================================================
+   ✨ INTRO TEXT CONTENT
+====================================================== */
+const introLines = [
   "Alles Gute zum Jahrestag 💖",
+  "",
   "Laura ❤️",
-  "Ich liebe dich ganz doll ❤️",
+  "",
+  "Ich liebe dich ganz doll.",
+  "",
+  "Jeder Moment mit dir ist etwas Besonderes.",
+  "",
   "Und hier ist dein Geschenk 🎁"
 ];
 
-const target = document.getElementById("intro-text");
-let i = 0; // Zeilenindex
-let j = 0; // Buchstabenindex
+/* ======================================================
+   🔧 ELEMENTS
+====================================================== */
+const intro = document.getElementById("intro");
+const introText = document.getElementById("introText");
+const scene = document.getElementById("scene");
 
-function type() {
-  if (i < text.length) {
-    if (j < text[i].length) {
-      target.textContent += text[i][j++];
-      setTimeout(type, 60); // Tippgeschwindigkeit
-    } else {
-      target.textContent += "\n"; // Zeilenumbruch
-      i++;
-      j = 0;
-      setTimeout(type, 700); // Pause zwischen Zeilen
-    }
+/* ======================================================
+   ⏱️ TIMING SETTINGS
+====================================================== */
+const TYPE_SPEED = 55;      // Buchstaben
+const LINE_DELAY = 650;    // Pause nach jeder Zeile
+const END_DELAY = 1200;    // Pause vor Fade-Out
+
+let lineIndex = 0;
+let charIndex = 0;
+let introStarted = false;
+
+/* ======================================================
+   ⌨️ TYPEWRITER LOGIC
+====================================================== */
+function typeNextChar() {
+  if (lineIndex >= introLines.length) {
+    finishIntro();
+    return;
+  }
+
+  const currentLine = introLines[lineIndex];
+
+  if (charIndex < currentLine.length) {
+    introText.textContent += currentLine.charAt(charIndex);
+    charIndex++;
+
+    setTimeout(typeNextChar, TYPE_SPEED);
   } else {
-    // Intro ausblenden
-    setTimeout(() => {
-      const intro = document.getElementById("intro");
-      intro.style.opacity = "0";
-      intro.style.pointerEvents = "none";
+    introText.textContent += "\n";
+    lineIndex++;
+    charIndex = 0;
 
-      const scene = document.getElementById("scene");
-      if (scene) scene.style.opacity = "1";
-    }, 1200);
+    setTimeout(typeNextChar, LINE_DELAY);
   }
 }
 
-/* =========================
-   START INTRO
-========================= */
-function startIntro() {
-  target.textContent = "";
-  type();
+/* ======================================================
+   🌫️ INTRO FINISH
+====================================================== */
+function finishIntro() {
+  setTimeout(() => {
+    intro.style.opacity = "0";
+
+    if (scene) {
+      scene.style.opacity = "1";
+    }
+
+    setTimeout(() => {
+      intro.style.display = "none";
+    }, 2000);
+
+  }, END_DELAY);
 }
 
+/* ======================================================
+   ▶️ START INTRO (PUBLIC)
+====================================================== */
+function startIntro() {
+  if (introStarted) return;
+  introStarted = true;
+
+  introText.textContent = "";
+  intro.style.display = "flex";
+  intro.style.opacity = "1";
+
+  lineIndex = 0;
+  charIndex = 0;
+
+  setTimeout(typeNextChar, 400);
+}
+
+/* ======================================================
+   🛑 SAFETY: DO NOT AUTO-START
+====================================================== */
+/*
+  startIntro() wird bewusst NICHT automatisch aufgerufen.
+  Es wird erst nach korrektem Passwort aus interactions.js gestartet.
+*/
