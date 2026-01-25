@@ -15,6 +15,8 @@ const imageInput = document.getElementById("imageInput");
 const uploadButton = document.getElementById("uploadButton");
 const imageLabel = document.getElementById("imageLabel");
 
+const isMobile = () => window.innerWidth <= 768;
+
 /* ======================================================
    🔒 PASSWORD LOCK
 ====================================================== */
@@ -44,11 +46,13 @@ unlockButton.addEventListener("click", () => {
 });
 
 /* ======================================================
-   🎯 FOCUS SYSTEM
+   🎯 FOCUS SYSTEM (DESKTOP ONLY)
 ====================================================== */
 let focusedElement = null;
 
 function setFocus(el) {
+  if (isMobile()) return; // ❌ NIE auf Mobile
+
   if (focusedElement === el) return;
 
   clearFocus();
@@ -64,6 +68,8 @@ function setFocus(el) {
 }
 
 function clearFocus() {
+  if (isMobile()) return;
+
   focusedElement = null;
 
   document.querySelectorAll(".focused").forEach(e =>
@@ -82,6 +88,7 @@ function clearFocus() {
 ====================================================== */
 frames.forEach(frame => {
   frame.addEventListener("click", e => {
+    if (isMobile()) return;
     e.stopPropagation();
     setFocus(frame);
   });
@@ -92,6 +99,11 @@ frames.forEach(frame => {
 ====================================================== */
 card.addEventListener("click", e => {
   e.stopPropagation();
+
+  if (isMobile()) {
+    card.classList.toggle("open"); // 📱 nur umdrehen
+    return;
+  }
 
   if (!card.classList.contains("focused")) {
     setFocus(card);
@@ -104,14 +116,14 @@ card.addEventListener("click", e => {
    🌫️ CLEAR FOCUS ON EMPTY CLICK
 ====================================================== */
 document.addEventListener("click", () => {
-  clearFocus();
+  if (!isMobile()) clearFocus();
 });
 
 /* ======================================================
    🖼️ DESKTOP OVAL POSITIONING
 ====================================================== */
 function positionFramesOval() {
-  if (window.innerWidth <= 768) return;
+  if (isMobile()) return;
 
   const vw = window.innerWidth;
   const vh = window.innerHeight;
@@ -154,9 +166,8 @@ stage.addEventListener("touchend", e => {
   const dx = e.changedTouches[0].clientX - startX;
   const dy = e.changedTouches[0].clientY - startY;
 
-  // 🔥 Wenn mehr vertikal als horizontal → Scroll erlauben
+  // vertikale Bewegung → scrollen lassen
   if (Math.abs(dy) > Math.abs(dx)) return;
-
   if (Math.abs(dx) < 60) return;
 
   if (dx < 0 && currentView === 0) currentView = 1;
@@ -164,7 +175,6 @@ stage.addEventListener("touchend", e => {
 
   stage.style.transform = `translateX(-${currentView * 100}vw)`;
 });
-
 
 /* ======================================================
    🎁 IMAGE UPLOAD + STORAGE
@@ -188,8 +198,7 @@ uploadButton.addEventListener("click", e => {
   const reader = new FileReader();
 
   reader.onload = ev => {
-    const img = frames[index].querySelector("img");
-    img.src = ev.target.result;
+    frames[index].querySelector("img").src = ev.target.result;
     localStorage.setItem(`frameImage-${index}`, ev.target.result);
   };
 
@@ -205,14 +214,3 @@ frames.forEach((frame, i) => {
     frame.querySelector("img").src = saved;
   }
 });
-
-/* ======================================================
-   🚫 PREVENT SCROLL LOCK ISSUES
-====================================================== */
-document.addEventListener("touchmove", e => {
-  if (focusedElement && window.innerWidth > 768) {
-    e.preventDefault();
-  }
-}, { passive: false });
-
-
