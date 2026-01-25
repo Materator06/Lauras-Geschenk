@@ -1,10 +1,6 @@
-html
-@@ -1,41 +1,41 @@
-@@ -1,102 +1,115 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Jahrestag</title>
@@ -15,104 +11,96 @@ html
 </head>
 
 <body class="locked">
-  <div id="mobileTabs">
-  <button id="tabImages" class="active">📸 Bilder</button>
-  <button id="tabCard">💌 Karte</button>
-  <div id="mobile-tabs">
-  <button id="tabImages" class="active">Bilder</button>
-  <button id="tabCard">Karte</button>
-</div>
 
-<div id="mobileImages"></div>
-<div id="mobileCard"></div>
-
-  
-
-<!-- LOCKSCREEN -->
-<div id="lockscreen">
-  <div class="lockbox">
-    <h2>💌</h2>
-    <p>Diese Seite ist nur für eine besondere Person</p>
-    <input type="password" id="pw" placeholder="Passwort eingeben">
-    <h2>💌 Nur für dich</h2>
-    <input id="pw" type="password" placeholder="Passwort">
-    <button id="unlock">Öffnen</button>
-    <p id="pw-error">❌ Falsches Passwort</p>
-    <div id="pw-error">Falsches Passwort</div>
+  <!-- LOCKSCREEN -->
+  <div id="lockscreen">
+    <div class="lockbox">
+      <h2>💌 Nur für dich</h2>
+      <input id="pw" type="password" placeholder="Passwort">
+      <button id="unlock">Öffnen</button>
+      <div id="pw-error">Falsches Passwort</div>
+    </div>
   </div>
-</div>
 
+  <!-- INTRO -->
+  <section id="intro">
+    <div id="intro-text"></div>
+  </section>
 
-<!-- INTRO IST IMMER SICHTBAR -->
-<!-- INTRO -->
-<section id="intro">
-  <div id="intro-text"></div>
-</section>
+  <!-- DESKTOP SZENE -->
+  <section id="scene">
+    <div id="camera">
+      <!-- 16 Bilderrahmen -->
+      <div class="frames-container">
+        <!-- JS setzt data-index für Positionierung -->
+        <div class="frame" data-index="0"><img src="images/frame1.jpeg"></div>
+        <div class="frame" data-index="1"><img src="images/frame2.jpeg"></div>
+        <div class="frame" data-index="2"><img src="images/frame3.jpeg"></div>
+        <div class="frame" data-index="3"><img src="images/frame4.jpeg"></div>
+        <div class="frame" data-index="4"><img src="images/frame5.jpeg"></div>
+        <div class="frame" data-index="5"><img src="images/frame6.jpeg"></div>
+        <div class="frame" data-index="6"><img src="images/frame7.jpeg"></div>
+        <div class="frame" data-index="7"><img src="images/frame8.jpeg"></div>
+        <div class="frame" data-index="8"><img src="images/frame9.jpeg"></div>
+        <div class="frame" data-index="9"><img src="images/frame10.jpeg"></div>
+        <div class="frame" data-index="10"><img src="images/frame11.jpeg"></div>
+        <div class="frame" data-index="11"><img src="images/frame12.jpeg"></div>
+        <div class="frame" data-index="12"><img src="images/frame13.jpeg"></div>
+        <div class="frame" data-index="13"><img src="images/frame14.jpeg"></div>
+        <div class="frame" data-index="14"><img src="images/frame15.jpeg"></div>
+        <div class="frame" data-index="15"><img src="images/frame16.jpeg"></div>
+      </div>
 
-
-
-<!-- ================= DESKTOP ================= -->
-<section id="scene">
-  <div id="camera">
-
-
-@@ -61,10 +61,7 @@
-        <div id="card-cover">💌</div>
-        <div id="card-inside">
-          <h3>Laura ❤️</h3>
-          <p>
-            Alles Gute zum Jahrestag.<br><br>
-            Ich liebe dich mehr als alles.
-          </p>
-          <p>Alles Gute zum Jahrestag.<br><br>Ich liebe dich.</p>
+      <!-- Geschenkkarte -->
+      <div id="card">
+        <div id="card-inner">
+          <div id="card-cover">💌</div>
+          <div id="card-inside">
+            <h3>Laura ❤️</h3>
+            <p>Alles Gute zum Jahrestag.<br><br>Ich liebe dich.</p>
+          </div>
         </div>
       </div>
     </div>
+  </section>
 
-@@ -72,10 +69,18 @@
-  </div>
-</section>
-
-<script src="js/intro.js"></script>
-<script src="js/interactions.js"></script>
-<!-- ================= MOBILE ================= -->
-<div id="mobile-app">
-  <div id="mobile-tabs">
-    <button id="btnImages" class="active">Bilder</button>
-    <button id="btnCard">Karte</button>
+  <!-- MOBILE -->
+  <div id="mobile-app">
+    <div id="mobile-tabs">
+      <button id="btnImages" class="active">Bilder</button>
+      <button id="btnCard">Karte</button>
+    </div>
+    <div id="mobile-images"></div>
+    <div id="mobile-card"></div>
   </div>
 
-<!-- Upload UI -->
-  <div id="mobile-images"></div>
-  <div id="mobile-card"></div>
-</div>
+  <!-- UPLOAD -->
+  <div id="upload-ui">
+    <select id="frame-select">
+      <option value="12">Frame 1</option>
+      <option value="13">Frame 2</option>
+      <option value="14">Frame 3</option>
+      <option value="15">Frame 4</option>
+      <option value="0">Frame 5</option>
+      <option value="1">Frame 6</option>
+      <option value="2">Frame 7</option>
+      <option value="3">Frame 8</option>
+      <option value="4">Frame 9</option>
+      <option value="5">Frame 10</option>
+      <option value="6">Frame 11</option>
+      <option value="7">Frame 12</option>
+      <option value="8">Frame 13</option>
+      <option value="9">Frame 14</option>
+      <option value="10">Frame 15</option>
+      <option value="11">Frame 16</option>
+    </select>
 
-<!-- UPLOAD UI -->
-<div id="upload-ui">
-  <select id="frame-select">
-    <option value="0">Frame 1</option>
+    <input type="file" id="image-upload" hidden>
+    <label for="image-upload" class="file-btn">🎁 Bild wählen</label>
+    <button id="upload-btn">Upload</button>
+  </div>
 
-@@ -97,19 +102,12 @@
-  </select>
-
-  <input type="file" id="image-upload" hidden>
-<label for="image-upload" class="file-btn">🎁 Bild auswählen</label>
-
-  <label for="image-upload" class="file-btn">🎁 Bild wählen</label>
-  <button id="upload-btn">Upload</button>
-</div>
-<div id="mobileImages">
-  <!-- deine Frames / Bilder hier -->
-</div>
-
-<div id="mobileCard">
-  <!-- deine Karte / Brief hier -->
-</div>
-
-
-<script src="js/intro.js"></script>
-<script src="js/interactions.js"></script>
-
+  <script src="js/intro.js"></script>
+  <script src="js/interactions.js"></script>
 </body>
-</html>
 </html>

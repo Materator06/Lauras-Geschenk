@@ -1,21 +1,37 @@
+/* =========================
+   INTRO SCREEN
+========================= */
 #intro {
   position: fixed;
   inset: 0;
-  background: black;
+  background: black; /* schwarzer Hintergrund während Intro */
   color: white;
   display: flex;
   align-items: center;
   justify-content: center;
- 
-  pointer-events: none;
-  opacity: 1;
+  font-family: monospace;
 
+  pointer-events: none; /* Klicks durchlassen */
+  opacity: 1;
+  z-index: 9999;
 
   transition: opacity 2s ease;
 }
 
 #intro-text {
   font-size: 26px;
-  white-space: pre-wrap;
+  line-height: 1.5;
+  white-space: pre-wrap; /* Zeilenumbrüche behalten */
+  text-align: center;
+}
+
+/* =========================
+   MOBILE ADJUSTMENTS
+========================= */
+@media (max-width: 768px) {
+  #intro-text {
+    font-size: 20px;
+    padding: 0 16px;
+  }
 }
 
