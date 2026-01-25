@@ -274,3 +274,10 @@ body {
 #cardBack {
   scroll-behavior: smooth;
 }
+#cardBack {
+  overflow: hidden;   /* ❌ kein Scroll */
+}
+#cardBack p {
+  font-size: 14px;
+  line-height: 1.4;
+}

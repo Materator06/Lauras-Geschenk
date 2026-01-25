@@ -97,35 +97,21 @@ frames.forEach(frame => {
 card.addEventListener("click", e => {
   e.stopPropagation();
 
-  // 📱 Mobile: nur flip
   if (isMobile()) {
     card.classList.toggle("open");
     return;
   }
 
-  // 🖥️ Desktop
+  // 1️⃣ erster Klick → nur Fokus
   if (!card.classList.contains("focused")) {
     setFocus(card);
-    card.classList.add("open");
-    cardExpanded = false;
-    card.classList.remove("expanded");
     return;
   }
 
-  // 1️⃣ Klick: öffnen
-  if (!card.classList.contains("open")) {
-    card.classList.add("open");
-    cardExpanded = false;
-    card.classList.remove("expanded");
-    return;
-  }
-
-  // 2️⃣ Klick: erweitern
-  if (!cardExpanded) {
-    card.classList.add("expanded");
-    cardExpanded = true;
-  }
+  // 2️⃣ zweiter Klick → erst jetzt drehen
+  card.classList.toggle("open");
 });
+
 
 
 document.addEventListener("click", () => {
